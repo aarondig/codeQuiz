@@ -34,7 +34,7 @@ $(function() {
       answer: "James Maxwell"
     },
     {
-      question: "Who took the first color photograph",
+      question: "Who",
         a: "1929",
         b: "1889",
         c: "1946",
@@ -64,8 +64,8 @@ $(function() {
 
 
   var secondsLeft = 100;
-  // var answerdelay = 1;  
-  // var answerdelay2 = 1;     
+  var answerdelay = 1;  
+  var answerdelay2 = 1;     
   
   pregame();
   
@@ -87,121 +87,46 @@ $(function() {
 
   });
   }
+  function buttonHandler(event) {
+        
+    if (event.currentTarget.textContent === questions[i].answer) {
+      console.log(questions[i].answer);
+      scorenum++;
+      alert("Correct!");
+      
+    } 
+    
+    else {
+      // alert("Incorrect, the correct answer was " + questions[i].answer);
+      console.log(questions[i].answer);
+      secondsLeft - 10;
+      alert("Incorrect");
+    }
+    delay();
+    i++;
+    return;
+  }
+  one.addEventListener("click", buttonHandler);
+  two.addEventListener("click", buttonHandler);
+  three.addEventListener("click", buttonHandler);
+  four.addEventListener("click", buttonHandler);
+  
+  
   function ask(){
 
       
       if (questions.length == i){
       endgame();
       console.log(i);
-      return;
+
       }
+
       questionText.textContent = questions[i].question;
       one.textContent = questions[i].a;
       two.textContent = questions[i].b;
       three.textContent = questions[i].c;
       four.textContent = questions[i].d;
       
-      one.addEventListener("click", function() {
-        
-        if (one.textContent === questions[i].answer) {
-          console.log(questions[i].answer);
-          scorenum++;
-          alert("Correct!");
-          
-        } 
-        
-        else {
-          // alert("Incorrect, the correct answer was " + questions[i].answer);
-          console.log(questions[i].answer);
-          secondsLeft - 10;
-        }
-        // delay();
-        i++;
-        ask();
-        return;
-      });
-
-      
-      two.addEventListener("click", function() {
-        
-        if (two.textContent === questions[i].answer) {
-          console.log(questions[i].answer);
-          scorenum++;
-          alert("Correct!");
-          
-        } 
-        
-        else {
-          console.log(questions[i].answer);
-          secondsLeft - 10;
-        }
-        // delay();
-        i++;
-        ask();
-        return;
-      });
-      
-      three.addEventListener("click", function() {
-        if (three.textContent === questions[i].answer) {
-          console.log(questions[i].answer);
-          scorenum++;
-          alert("Correct!");
-         
-        } 
-        
-        else {
-          console.log(questions[i].answer);
-          secondsLeft - 10;
-        }
-        // delay();
-        i++;
-        ask();
-        return;
-      });
-      
-      four.addEventListener("click", function() {
-     
-        if (four.textContent === questions[i].answer) {
-          console.log(questions[i].answer);
-          scorenum++;
-          alert("Correct!");
-        } 
-        
-        else {
-          console.log(questions[i].answer);
-          secondsLeft - 10;
-        }
-        // delay();
-        i++;
-        ask();
-        return;
-      });
-      
-    //   function delay() {
-    //     setInterval(function() {
-    //         answerdelay--;
-    //         if (answerdelay === 0){
-    //           hintText.textContent = questions[i].answer;
-    //           delay2();
-    //         }
-
-    //     },1000);
-    //   }
-
-
-
-    //   function delay2() {
-    //   setInterval(function() {
-    //       answerdelay2--;
-
-    //       if (answerdelay2 === 0){
-    //         i++;
-    //         ask();
-    //         hintText.textContent = "";
-    //       }
-          
-    //   },1000);
-    // }
 
       score.textContent = scorenum;
       
@@ -231,9 +156,33 @@ $(function() {
         clearInterval(timerInterval);
         endgame();
       }
-      
-
     }, 1000);
   }
+
+  function delay() {
+   var delayinterval1 = setInterval(function() {
+        answerdelay--;
+        if (answerdelay === 0){
+          hintText.textContent = questions[i].answer;
+          clearInterval(delayinterval1);
+          delay2();
+        }
+
+    },1000);
+  }
+
+  function delay2() {
+    var delayinterval2 = setInterval(function() {
+      answerdelay2--;
+
+      if (answerdelay2 === 0){
+        i++;
+        clearInterval(delayinterval2);
+        hintText.textContent = "";
+        ask();
+      }
+      
+  },1000);
+}
 });
 
