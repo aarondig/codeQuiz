@@ -1,7 +1,8 @@
 $(function() {
   var startgame = document.querySelector(".btn");
+  var playagain = document.getElementById("playagain");
   var questionText = document.querySelector(".cover-heading");
-  var hintText = document.querySelector(".lead")
+  var hintText = document.querySelector(".lead");
   var timeEl = document.querySelector(".masthead-brand");
   var score = document.querySelector(".score");
 
@@ -12,12 +13,9 @@ $(function() {
 
   var allbuttons = document.getElementById("questionForm");
   allbuttons.style.display = "none";
-
-
-  scorenum = 0;
-
-
   
+  scorenum = 0;
+  i = 0;
 
   var questions = [{
     question: "When was the first photographic snapshot taken?",
@@ -36,12 +34,12 @@ $(function() {
       answer: "James Maxwell"
     },
     {
-      question: "When was the term 'megapixel' first used?",
+      question: "Who took the first color photograph",
         a: "1929",
         b: "1889",
         c: "1946",
         d: "1984",
-      answer: "1984"
+      answer: "James Maxwell"
       },
       {
         question: "When was the first color photograph taken?",
@@ -49,7 +47,7 @@ $(function() {
           b: "1826",
           c: "1912",
           d: "1946",
-        answer: "1861"
+        answer: "1861",
       },
       {
         question: "When was the term 'megapixel' first used?",
@@ -59,49 +57,65 @@ $(function() {
           d: "1984",
         answer: "1984"
         },
+        {
+          done: "Go Home"
+          },
     ];
 
 
   var secondsLeft = 100;
-        
+  // var answerdelay = 1;  
+  // var answerdelay2 = 1;     
   
-
-  i = 0;
-
+  pregame();
+  
+  function pregame(){ 
+    startgame.style.display = "contents";
+    playagain.style.display = "none";
+    questionText.textContent = "History of Photography";
+    hintText.textContent = "Test your knowladge!";
+    
   startgame.addEventListener("click", function(){
-
-    //Button Functions
-
-    startgame.remove();
+    
+    startgame.style.display = "none";
     allbuttons.style.display = "contents";
-
-   setTime();
-   ask();
-
+    scorenum = 0;
+    i = 0;
+    hintText.textContent = "";
+    setTime();
+    ask();
 
   });
-
+  }
   function ask(){
-    
+
+      
+      if (questions.length == i){
+      endgame();
+      console.log(i);
+      return;
+      }
       questionText.textContent = questions[i].question;
       one.textContent = questions[i].a;
       two.textContent = questions[i].b;
       three.textContent = questions[i].c;
       four.textContent = questions[i].d;
       
-      
       one.addEventListener("click", function() {
         
         if (one.textContent === questions[i].answer) {
           console.log(questions[i].answer);
           scorenum++;
-          // alert("Correct!");
+          alert("Correct!");
+          
         } 
         
         else {
           // alert("Incorrect, the correct answer was " + questions[i].answer);
           console.log(questions[i].answer);
+          secondsLeft - 10;
         }
+        // delay();
         i++;
         ask();
         return;
@@ -113,12 +127,15 @@ $(function() {
         if (two.textContent === questions[i].answer) {
           console.log(questions[i].answer);
           scorenum++;
+          alert("Correct!");
           
         } 
         
         else {
           console.log(questions[i].answer);
+          secondsLeft - 10;
         }
+        // delay();
         i++;
         ask();
         return;
@@ -128,12 +145,15 @@ $(function() {
         if (three.textContent === questions[i].answer) {
           console.log(questions[i].answer);
           scorenum++;
+          alert("Correct!");
          
         } 
         
         else {
           console.log(questions[i].answer);
+          secondsLeft - 10;
         }
+        // delay();
         i++;
         ask();
         return;
@@ -144,25 +164,62 @@ $(function() {
         if (four.textContent === questions[i].answer) {
           console.log(questions[i].answer);
           scorenum++;
-          
+          alert("Correct!");
         } 
         
         else {
           console.log(questions[i].answer);
+          secondsLeft - 10;
         }
+        // delay();
         i++;
         ask();
         return;
       });
-      // if (i == questions.length){
-      // counter == 0
-
-      // }
       
+    //   function delay() {
+    //     setInterval(function() {
+    //         answerdelay--;
+    //         if (answerdelay === 0){
+    //           hintText.textContent = questions[i].answer;
+    //           delay2();
+    //         }
+
+    //     },1000);
+    //   }
+
+
+
+    //   function delay2() {
+    //   setInterval(function() {
+    //       answerdelay2--;
+
+    //       if (answerdelay2 === 0){
+    //         i++;
+    //         ask();
+    //         hintText.textContent = "";
+    //       }
+          
+    //   },1000);
+    // }
+
       score.textContent = scorenum;
+      
 
     }
     
+    function endgame(){
+      
+      allbuttons.style.display = "none";
+      questionText.textContent = "Game Over";
+      hintText.textContent = "You scored " + scorenum + " out of 4 correct!";
+      playagain.style.display = "contents";
+      
+      playagain.addEventListener("click", function(){
+        pregame();
+      });
+      clearInterval(timerInterval);
+    }
 
 
     function setTime() {
@@ -172,16 +229,11 @@ $(function() {
 
       if(secondsLeft === 0) {
         clearInterval(timerInterval);
-        
-
-
-
-
-
+        endgame();
       }
+      
 
     }, 1000);
   }
- 
 });
 
