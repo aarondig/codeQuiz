@@ -3,6 +3,7 @@ $(function() {
   var question = document.querySelector(".cover-heading");
   var hintText = document.querySelector(".lead")
   var timeEl = document.querySelector(".masthead-brand");
+  var score = document.querySelector(".nav");
 
   var one = document.getElementById("one");    
   var two = document.getElementById("two"); 
@@ -13,18 +14,19 @@ $(function() {
   allbuttons.style.display = "none";
 
 
+  score = 0;
 
-  
+
   i = 0;
 
   var questions = [{
-    question: "How many",
+    question: "When was the first photographic snapshot taken?",
     choices: {
-      a: "hello",
-      b: "my",
-      c: "name",
-      d: "is"},
-    answer: ["i need sleep"],
+      a: "1776",
+      b: "1914",
+      c: "1826",
+      d: "2020"},
+    textanswer: ["i need sleep"],
     },
     {
       question: ["help"],
@@ -33,7 +35,7 @@ $(function() {
         b: "my",
         c: "name",
         d: "is"},
-      answer: ["help"],
+      textanswer: { c: "help"}
     },
     {
       question: ["How many"],
@@ -42,7 +44,7 @@ $(function() {
         b: "my",
         c: "name",
         d: "is"},
-      answer: ["i need sleep"],
+      textanswer: ["i need sleep"],
       },
       {
         question: ["dear god plz let me sleep"],
@@ -51,9 +53,11 @@ $(function() {
           b: "my",
           c: "name",
           d: "is"},
-        answer: ["i need sleep"],
+        textanswer: ["i need sleep"],
       },
     ];
+
+    var answerkey = [three, two, three, four];
 
 
   var secondsLeft = 100;
@@ -65,8 +69,7 @@ $(function() {
 
     startgame.remove();
     allbuttons.style.display = "contents";
-    
-    var buttons = document.getElementById("one");
+
 
       //QUESTIONS
 
@@ -84,27 +87,79 @@ $(function() {
 
 
   });
-
+0
   function ask(){
+    
       question.textContent = questions[i]["question"];
-      
+      var answer = ans[i];
       one.textContent = questions[i]["choices"]["a"];
       two.textContent = questions[i]["choices"]["b"];
       three.textContent = questions[i]["choices"]["c"];
       four.textContent = questions[i]["choices"]["d"];
 
       
+      console.log(answer);
 
-      var questionForm = document.querySelector("#questionForm");
-      questionForm.addEventListener("click", function(event) {
-        if (event.target.matches("button")) {
+      
+      one.addEventListener("click", function(event) {
+     
+        if (event.target.matches(answer)) {
           
+          score.textContent(score++);
+          alert("Correct!");
           i++;
-          hintText.textContent = questions[i]["answer"];
-          
           ask();
+        } else {
+          alert("Incorrect, the correct answer was " + textanswer);
+          i++;
+          ask();
+        }
+      });
 
-        };
+      
+      two.addEventListener("click", function(event) {
+     
+        if (event.target.matches(answer)) {
+          
+          score.textContent(score++);
+          alert("Correct!");
+          i++;
+          ask();
+        } else {
+          alert("Incorrect, the correct answer was " + textanswer);
+          i++;
+          ask();
+        }
+      });
+      
+      three.addEventListener("click", function(event) {
+     
+        if (event.target.matches(answer)) {
+          
+          score.textContent(score++);
+          alert("Correct!");
+          i++;
+          ask();
+        } else {
+          alert("Incorrect, the correct answer was " + textanswer);
+          i++;
+          ask();
+        }
+      });
+      
+      four.addEventListener("click", function(event) {
+     
+        if (event.target.matches(answer)) {
+          
+          score.textContent(score++);
+          alert("Correct!");
+          i++;
+          ask();
+        } else {
+          alert("Incorrect, the correct answer was " + textanswer);
+          i++;
+          ask();
+        }
       });
       // if (i == questions.length){
       // counter == 0
